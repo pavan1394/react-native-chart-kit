@@ -28,6 +28,10 @@ export interface Dataset {
 
   /** Stroke Dash Offset */
   strokeDashOffset?: number;
+
+  svg?: any;
+
+  strokeColor?: (opacity: number) => string;
 }
 
 export interface ChartData {
@@ -146,6 +150,8 @@ export interface ChartConfig {
    * Set Info View size
    */
   scrollableInfoSize?: Size;
+
+  strokeColor?: (opacity: number) => string;
 }
 
 export interface Size {
