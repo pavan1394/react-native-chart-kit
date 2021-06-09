@@ -231,6 +231,10 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
     return (dataset.color || this.props.chartConfig.color)(opacity);
   };
 
+  getStrokeColor = (dataset: Dataset, opacity: number) => {
+    return (dataset.strokeColor || this.props.chartConfig.strokeColor)(opacity);
+  };
+
   getStrokeWidth = (dataset: Dataset) => {
     return dataset.strokeWidth || this.props.chartConfig.strokeWidth || 3;
   };
@@ -453,13 +457,13 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
               height
             )) /
             4) *
-            3 +
+          3 +
           paddingTop;
         yValues.push(yval);
         const xval =
           paddingRight +
           ((dataset.data.length - index - 1) * (width - paddingRight)) /
-            dataset.data.length;
+          dataset.data.length;
         xValues.push(xval);
 
         yValuesLabel.push(
@@ -580,13 +584,12 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
               })
               .join(" ") +
             ` ${paddingRight +
-              ((width - paddingRight) / dataset.data.length) *
-                (dataset.data.length - 1)},${(height / 4) * 3 +
-              paddingTop} ${paddingRight},${(height / 4) * 3 + paddingTop}`
+            ((width - paddingRight) / dataset.data.length) *
+            (dataset.data.length - 1)},${(height / 4) * 3 +
+            paddingTop} ${paddingRight},${(height / 4) * 3 + paddingTop}`
           }
-          fill={`url(#fillShadowGradient${
-            useColorFromDataset ? `_${index}` : ""
-          })`}
+          fill={`url(#fillShadowGradient${useColorFromDataset ? `_${index}` : ""
+            })`}
           strokeWidth={0}
         />
       );
@@ -721,7 +724,7 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
           key={index}
           d={result}
           fill="none"
-          stroke={this.getColor(dataset, 0.2)}
+          stroke={this.getStrokeColor(dataset, 0.2)}
           strokeWidth={this.getStrokeWidth(dataset)}
           strokeDasharray={dataset.strokeDashArray}
           strokeDashoffset={dataset.strokeDashOffset}
@@ -753,17 +756,18 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
           data
         }) +
         ` L${paddingRight +
-          ((width - paddingRight) / dataset.data.length) *
-            (dataset.data.length - 1)},${(height / 4) * 3 +
-          paddingTop} L${paddingRight},${(height / 4) * 3 + paddingTop} Z`;
+        ((width - paddingRight) / dataset.data.length) *
+        (dataset.data.length - 1)},${(height / 4) * 3 +
+        paddingTop} L${paddingRight},${(height / 4) * 3 + paddingTop} Z`;
+
+
 
       return (
         <Path
           key={index}
           d={d}
-          fill={`url(#fillShadowGradient${
-            useColorFromDataset ? `_${index}` : ""
-          })`}
+          fill={`url(#fillShadowGradient${useColorFromDataset ? `_${index}` : ""
+            })`}
           strokeWidth={0}
         />
       );
@@ -866,18 +870,18 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
               {withHorizontalLines &&
                 (withInnerLines
                   ? this.renderHorizontalLines({
-                      ...config,
-                      count: count,
-                      paddingTop,
-                      paddingRight
-                    })
+                    ...config,
+                    count: count,
+                    paddingTop,
+                    paddingRight
+                  })
                   : withOuterLines
-                  ? this.renderHorizontalLine({
+                    ? this.renderHorizontalLine({
                       ...config,
                       paddingTop,
                       paddingRight
                     })
-                  : null)}
+                    : null)}
             </G>
             <G>
               {withHorizontalLabels &&
@@ -895,18 +899,18 @@ class LineChart extends AbstractChart<LineChartProps, LineChartState> {
               {withVerticalLines &&
                 (withInnerLines
                   ? this.renderVerticalLines({
-                      ...config,
-                      data: data.datasets[0].data,
-                      paddingTop: paddingTop as number,
-                      paddingRight: paddingRight as number
-                    })
+                    ...config,
+                    data: data.datasets[0].data,
+                    paddingTop: paddingTop as number,
+                    paddingRight: paddingRight as number
+                  })
                   : withOuterLines
-                  ? this.renderVerticalLine({
+                    ? this.renderVerticalLine({
                       ...config,
                       paddingTop: paddingTop as number,
                       paddingRight: paddingRight as number
                     })
-                  : null)}
+                    : null)}
             </G>
             <G>
               {withVerticalLabels &&
